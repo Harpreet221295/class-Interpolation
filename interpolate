@@ -56,7 +56,22 @@ class Interpolate:
             result=P.polyadd(result,array(prod)*Q[0][i])
         temp=list(result);
         self.pattern(temp);    
-                                                        
+    
+    def plot(self,U,V):
+        x=[1]
+        for i in range(len(U)):
+            x=P.poly_multiply(x,[-1*U[i],1])
+        b=[0]
+        for i in range(len(U)):
+            a=P.poly_divide(x,[-1*U[i],1])
+            b=P.poly_add(P.poly_multiply((P.poly_divide(a[0],P.poly_value(U[i],a[0])))[0],[V[i]]),b)
+        plt.plot(U,V,'ro')
+        X1=arange(-5,5,0.1)
+        Y=P.poly_value(X1,b)
+        plt.plot(X1,Y,'k')
+        plt.show()
+
+                                                    
 
 apx=Interpolate()                                                          
 for method in ["newton","lagrange"]:
